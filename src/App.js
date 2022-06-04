@@ -1,23 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import React from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {update} from './actions';
+import { marked } from 'marked';
 
 function App() {
+  const dispatch = useDispatch();
+  const text = useSelector(state => state);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" id='centered'>
+      <h1 id='title'>GitHub Flavored Markdown Editor</h1><br/>
+        <textarea id="editor" onChange={e => dispatch(update(e.target.value))}>{text}</textarea><br/><br/>
+        <div id="preview" dangerouslySetInnerHTML={{__html: marked.parse(text)}}></div>
     </div>
   );
 }
